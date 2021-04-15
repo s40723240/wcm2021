@@ -1,9 +1,4 @@
-<h1>About</h1>
-<p>This is <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a></p>
-<p>目前的 cmsimde 在編輯器下方新增一個 csave 按鈕, 意即 collabrative save, 當動態網際管理系統在多人同時維護登入維護網頁內容時, 編輯各頁面時段, 該頁面可能已經改版, 因此使用 csave 按鈕存檔時, 會導入當下最新的該頁面內容, 並試圖與編輯中的頁面內容進行合併.</p>
-<p>使用 csave 按鈕存檔無法刪除頁面資料.</p>
-<p>使用 Edit All 模式, 無法使用 csave 按鈕（尚未測試).</p>
-<p>個人倉儲:<a href="https://github.com/s40723240/wcm2021">https://github.com/s40723240/wcm2021</a></p>
+<h1>First</h1>
 <h1>WEEK</h1>
 <p><a href="https://s40723240.github.io/wcm2021/content/WEEK1-9.html">week1-9</a></p>
 <p><a href="https://s40723240.github.io/wcm2021/content/WEEK10-18.html">week10-18</a></p>
@@ -31,5 +26,37 @@
 <li>當利用 putty.exe 設定連線 session 時必須注意是否使用 Proxy, 以及 SSH 中的 Auth 是否對應到前面所存檔的 .ppk private key 位置.</li>
 <li>一旦 Github session 設定完成, 可以從 [HKEY_CURRENT_USER\SOFTWARE\SimonTatham] 將 registry 設定匯出存為 y:\my_github.reg, 並在 start_ipv6.bat 中以  regedit.exe /S y:\my_github.reg 將設定匯入.</li>
 </ol>
-<h4><img alt="" height="240" src="/images/ssh.png" width="459"/></h4>
-<h2>WEEK10-18</h2>
+<h4><img alt="" height="473" src="/images/ssh.png" width="904"/></h4>
+<p><strong><span style="color: #ff0000;">week7</span></strong></p>
+<p><strong><span style="color: #000000;">heroku實作</span></strong></p>
+<p><span>步驟一:</span><span><span> </span>(</span><span>建立 Heroku 帳號</span><span>) 進入<span> </span></span><a href="https://heroku.com/">https://heroku.com</a><span>, 建立帳號:s40723240,密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號. </span></p>
+<p><span>Heroku 只允許免費建立五個應用程式, 且每個程式的最大容量為 500MB</span></p>
+<p><span>步驟二:</span><span><span> </span>(</span><span>建立 Heroku app</span><span>) 登入 Heroku 後，建立s40723240 app，將可至 https://s40723240.herokuapp.com 連線取得網站最初內容.</span></p>
+<p><span>步驟三:</span><span><span> </span>(下載 Heroku CLI) 從<span> </span></span><a href="http://a.kmol.info:88/heroku.7z">http://a.kmol.info:88/heroku.7z</a><span><span> </span>下載 Heroku cli 程式檔案, 解開至隨身碟 Y: 所在位置</span></p>
+<p><span>步驟四:<span><span> </span>(</span><span>修改命令搜尋路徑</span><span>) 修改隨身系統的啟動批次檔案(ipv4 ipv6), 讓 Windows 的命令視窗中可以執行 heroku.exe</span></span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">set Local=%Disk%\heroku
+
+REM for heroku login
+set HTTP_PROXY=http://[2001:288:6004:17::69]:3128
+set HTTPS_PROXY=http://[2001:288:6004:17::69]:3128
+
+set path_heroku=%Disk%:\heroku\bin;</pre>
+<p><span>重新啟動已經納入可執行 heroku.exe 的隨身碟 start_ipv6.bat 或 start_ipv4.bat</span></p>
+<p><span>步驟五:<span><span> </span>(</span><span>測試 heroku 執行</span><span>) 測試是否能夠在修改後的命令列中執行 heroku.exe, 輸入 heroku version 若回應所使用的版本表示上述路徑設定已經成功.</span></span></p>
+<p><span><span><img alt="" height="348" src="/images/cmd_KXfRYadR0v.png" width="916"/></span></span></p>
+<p><span><span>步驟六:<span><span> </span>(</span><span>設定 heroku 代理主機</span><span>)<span> </span></span>git config --global http.proxy "http://[2001:288:6004:17::69]:3128" 進行設定.</span></span></p>
+<p><span>步驟七:</span><span> </span>(<span>設定同步倉儲</span>) 針對利用 Heroku 同步 Github Pages 上的網站內容, 只需要透過 git remote add (Heroku 指令為 heroku git:remote -a heroku_倉儲_名稱, 之後只要在 heroku login 狀態下, 可以直接利用 git push) 在近端設定一個連線到 Heroku 倉儲的代號, 就能在每次更新 Github Pages 倉儲後, 再將內容同步至 Heroku. 網際內容管理課程將使用兩種 Heroku app 設定, 也就是靜態網頁與動態網頁:</p>
+<p>靜態網頁 - 採用 php 方式部署, 讓 Heroku 將靜態網頁視為 PHP 程式, 利用 index.php 跳轉到 index.html</p>
+<p>動態網頁 - 讓 Heroku 執行 cmsimde/wsgi.py 的方式進行雲端伺服.</p>
+<p><span>步驟八:</span><span><span> </span>(</span><span>以 git 進行提交推送</span><span>)<span> </span></span></p>
+<p><span><span><img alt="" height="242" src="/images/1.png" width="913"/></span></span></p>
+<p><span><span><img alt="" height="113" src="/images/2.png" width="913"/></span></span></p>
+<p><span><span><img alt="" height="770" src="/images/3.png" width="924"/></span></span></p>
+<p><span></span></p>
+<p><span><span></span></span></p><h2>WEEK10-18</h2>
+<h1>About</h1>
+<p>This is <a href="https://github.com/mdecourse/cmstemplate">https://github.com/mdecourse/cmstemplate</a></p>
+<p>目前的 cmsimde 在編輯器下方新增一個 csave 按鈕, 意即 collabrative save, 當動態網際管理系統在多人同時維護登入維護網頁內容時, 編輯各頁面時段, 該頁面可能已經改版, 因此使用 csave 按鈕存檔時, 會導入當下最新的該頁面內容, 並試圖與編輯中的頁面內容進行合併.</p>
+<p>使用 csave 按鈕存檔無法刪除頁面資料.</p>
+<p>使用 Edit All 模式, 無法使用 csave 按鈕（尚未測試).</p>
+<p>個人倉儲:<a href="https://github.com/s40723240/wcm2021">https://github.com/s40723240/wcm2021</a></p>
