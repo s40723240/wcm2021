@@ -62,12 +62,15 @@ set path_heroku=%Disk%:\heroku\bin;</pre>
 <p><span style="color: #000000;"><strong><span color="#000000">Q:將cmsimde更新至最新版本</span></strong></span></p>
 <p><span style="color: #000000;"><strong><span color="#000000">A:<span>以 <span style="color: #ff0000;">git pull origin master</span> 拉回最新版本的程式碼, 並且注意是否 cmsimde/up_dir 目錄中有檔案更新, 若是則必須將這些隨著版次更新的檔案, 從 up_dir 複製到倉儲根目錄.</span></span></strong></span></p>
 <p><strong><span style="color: #ff0000;"><span color="#000000"><span style="color: #000000;">Q:python wsgi.py出現錯誤</span><br/></span></span></strong></p>
-<p><strong><span style="color: #ff0000;"><span color="#000000"><span style="color: #000000;"><img alt="" height="87" src="/images/wsgi.png" width="476"/></span></span></span></strong></p>
-<p><b>A:將ud_dir資料夾的localhost.crt localhost.key搬去cmsimde資料夾</b></p>
+<p><strong><span style="color: #ff0000;"><span color="#000000"><span style="color: #000000;"><img alt="" height="111" src="/images/wsgi.png" width="607"/></span></span></span></strong></p>
+<p><b>A:將ud_dir資料夾的<span style="color: #ff0000;">localhost.crt localhost.key</span>搬去cmsimde資料夾</b></p>
 <p><b>Q:<span>利用 cms.bat 與 acp.bat 開啟動態網頁並透過 ssh 進行 git add, commit 與 push.</span></b></p>
 <p><b>A:設定好ssh，倉儲含有cms.bat與acp.bat檔案，即可在倉儲下進行<span style="color: #ff0000;">acp "commit內容"<span style="color: #000000;">簡化 add commit push的過程</span></span></b></p>
+<p><b><span style="color: #ff0000;"><span style="color: #000000;"><img alt="" height="343" src="/images/acp.png" width="686"/></span></span></b></p>
 <p><span style="color: #ff0000;"><b><span style="color: #000000;">倉儲下進行</span>cms<span style="color: #000000;">簡化進入cmsimde python wsgi.py 的過程</span></b></span></p>
-<p><b><span style="color: #ff0000;"><span style="color: #000000;"> </span></span></b></p>
-<p><b><span style="color: #ff0000;"><span style="color: #000000;"></span></span></b></p>
-<p><strong><span style="color: #ff0000;"><span color="#000000"><span style="color: #000000;"></span></span></span></strong></p>
-<p><span style="color: #000000;"><strong><span color="#000000"></span></strong></span></p>
+<p><b><span style="color: #ff0000;"><span style="color: #000000;"> <img alt="" height="198" src="/images/cms.png" width="686"/></span></span></b></p>
+<p>Q:<span style="color: #000000;">leoID not found</span></p>
+<p><span style="color: #000000;">A:在home_ipv4(6)資料夾-&gt;.leo資料夾下建立<span style="color: #ff0000;">.leoID.txt</span>  建立內容(leo)</span></p>
+<p><span style="color: #000000;"></span></p>
+<p></p>
+<p></p>
