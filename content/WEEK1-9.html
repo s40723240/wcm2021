@@ -175,7 +175,10 @@ REM for heroku login
 set HTTP_PROXY=http://[2001:288:6004:17::69]:3128
 set HTTPS_PROXY=http://[2001:288:6004:17::69]:3128
 
-set path_heroku=%Disk%:\heroku\bin;</pre>
+set path_heroku=%Disk%:\heroku\bin;
+
+path=%Disk%:;%path_python%;%path_portablegit%;%path_heroku%;%path%;
+</pre>
 <p><span>重新啟動已經納入可執行 heroku.exe 的隨身碟 start_ipv6.bat 或 start_ipv4.bat</span></p>
 <p><span>步驟五:<span><span> </span>(</span><span>測試 heroku 執行</span><span>) 測試是否能夠在修改後的命令列中執行 heroku.exe, 輸入 heroku version 若回應所使用的版本表示上述路徑設定已經成功.</span></span></p>
 <p><span><span><img alt="" height="348" src="./../images/cmd_KXfRYadR0v.png" width="916"/></span></span></p>
