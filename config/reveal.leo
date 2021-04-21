@@ -22,8 +22,6 @@
 <v t="leo.20200818170535.1"><vh>slide 2</vh></v>
 <v t="leo.20200818170636.1"><vh>slide3</vh>
 <v t="leo.20200818170909.1"><vh>slide 3-1</vh></v>
-<v t="leo.20200818170953.1"><vh>slide 3-2</vh></v>
-<v t="leo.20200818171010.1"><vh>slide 3-3</vh></v>
 </v>
 <v t="leo.20200818170725.1"><vh>slide 4</vh></v>
 <v t="leo.20200818171138.1"><vh>slide 5 </vh></v>
@@ -183,7 +181,7 @@ vertical: body pane on the botton</t>
 <t tx="leo.20200818165438.1">&lt;head&gt;
     &lt;meta charset="utf-8"&gt;
 
-    &lt;title&gt;reveal.js – The HTML Presentation Framework&lt;/title&gt;
+    &lt;title&gt;s40723240 WCM2021&lt;/title&gt;
 
     &lt;meta name="description" content="A framework for easily creating beautiful presentations using HTML"&gt;
     &lt;meta name="author" content="Hakim El Hattab"&gt;
@@ -230,37 +228,197 @@ vertical: body pane on the botton</t>
 &lt;/section&gt;
 
 </t>
-<t tx="leo.20200818170725.1">&lt;section&gt;
-    &lt;h2&gt;Slides&lt;/h2&gt;
-    &lt;p&gt;
-        Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at &lt;a href="https://slides.com" target="_blank"&gt;https://slides.com&lt;/a&gt;.
-    &lt;/p&gt;
+<t tx="leo.20200818170725.1">&lt;section data-auto-animate&gt;
+    &lt;h2 data-id="code-title"&gt;期中報告&lt;/h2&gt;
+    &lt;pre data-id="code-animation"&gt;&lt;code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24"&gt;
+       import requests
+import bs4
+# for os.environ and os.system
+import os
+# for geting html file path
+import pathlib
+# 以下因應改為 Heroku based 程式所需導入模組,  修改步驟 1/6
+from flask import Flask, request 
+from flask_cors import CORS
+
+
+# 修改步驟 2/6 , 加入 Flask 相關物件設定
+app = Flask(__name__)
+# 此一設定可以讓程式跨網域擷取資料
+CORS(app)
+
+# for pythn 3.9,  在近端測試時仍需要設定 proxy, 若使用 Python 3.8 執行則會自動使用系統的 Proxy 設定
+# 推向 Heroku 之前必須將 proxy 蓋掉
+'''
+proxy = 'http://[2001:288:6004:17::69]:3128'
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
+'''
+'''
+url:  'jclassroom_ajax.php',
+data: { pselyr: pselyr, pselclssroom: pselclssroom },
+'''
+
+# 修改步驟 3/6, 試著將程式改為網際模式, 需要套用 Flask 的網際 decorator
+@app.route('/')
+def timeTableList():
+    # 修改步驟 7/6, 為了讓使用者可以透過網際 GET 設定以下兩個變數, 必須先蓋掉原先直接設定學期與實驗室代號的部分, 改為透過 request 取得
+    '''
+    &lt;option value="BGA0611" &gt;BGA0611 (研討室(三)_綜合工程一館 6F)&lt;/option&gt;
+    &lt;option value="BGA0620" &gt;BGA0620 (動態系統實驗室_綜合工程一館 6F)&lt;/option&gt;
+    &lt;option value="BGA0640" &gt;BGA0640 (創意設計室_綜合工程一館 6F)&lt;/option&gt;
+    &lt;option value="BGA0710" &gt;BGA0710 (研討室(二)_綜合工程一館 7F)&lt;/option&gt;
+    &lt;option value="BGA0730" &gt;BGA0730 (研討室(一)_綜合工程一館 7F)&lt;/option&gt;
+    &lt;option value="BGA0760" &gt;BGA0760 (逆向快速成型實驗室_綜合工程一館 7F)&lt;/option&gt;
+    &lt;option value="BGA0810" &gt;BGA0810 (電腦輔助設計室_綜合工程一館 8F)&lt;/option&gt;
+    &lt;option value="BGA0820" &gt;BGA0820 (智慧感測與致動實驗室_綜合工程一館 8F)&lt;/option&gt;
+    &lt;option value="BGA0823" &gt;BGA0823 (新產品創意設計中心_綜合工程一館 8F)&lt;/option&gt;
+    &lt;option value="BGA0830" &gt;BGA0830 (電腦輔助繪圖室_綜合工程一館 8F)&lt;/option&gt;
+    &lt;option value="BGA0842" &gt;BGA0842 (機械元件設計實驗室_綜合工程一館 8F)&lt;/option&gt;
+    &lt;option value="BGA0901" &gt;BGA0901 (國際會議廳_綜合工程一館 9F)&lt;/option&gt;
+    &lt;option value="BGA0911" &gt;BGA0911 (機電實驗室_綜合工程一館 9F)&lt;/option&gt;
+    '''
+    '''
+    semester = '1092'
+    classroomno = 'BGA0810'
+    column = True
+    '''
+    semester = request.args.get('semester')
+    classroomno = request.args.get('classroomno')
+
+    if semester == None:
+        semester = '1092'
+    if classroomno == None:
+        # BGA0810 電腦輔助設計室
+        classroomno = 'BGA0810'
+    #print(semester, classroomno)
+        
+    headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+    url = 'https://qry.nfu.edu.tw/jclassroom_ajax.php'
+    post_var = {'pselyr': semester, 'pselclssroom': classroomno}
+
+    result = requests.post(url, data = post_var, headers = headers)
+
+    soup = bs4.BeautifulSoup(result.content, 'lxml')
+
+    # 先除掉所有 anchor
+    for a in soup.findAll('a'):
+        # bs3 語法
+        #a.replaceWithChildren()
+        # bs4 語法, 將標註與內容拆開
+        a.unwrap()
+
+    # 根據輸出設定, 取出 class='tbcls' 的 table 資料
+    table = soup.find('table', {'class': 'tbcls'})
+
+    # ########## 以下程式碼用來計算排課節數 ##########
+    # 以下取出 td 標註資料
+    table_data = [i.text for i in table.find_all('td')]
+    #print(table_data)
+    timeTable = []
+    # 去除非排課欄位資料內容
+    for i in table_data:
+        if not "虎尾科技" in i and not "節" in i and not "\xa0" in i:
+            timeTable.append(i)
+    #print(len(timeTable))
+    totalNum = len(timeTable)
+    # ########## 以上程式碼用來計算排課節數 ##########
+
+    # 重建 table, 設定邊線為 1 pixel
+    output = "總排課節數: " + str(totalNum) + "&lt;br /&gt;&lt;br /&gt;&lt;table border='1'&gt;"
+
+    for i in table.contents:
+        # 利用 replace 復原 &amp;nbsp;
+        output += str(i).replace("&amp;amp;nbsp", "&amp;nbsp;")
+    output += "&lt;/table&gt;"
+    #print(output)
+    # 修改步驟 5/6 , 因為已經將原先可列印出程式的步驟改為 function, 因此必須以 return 將擷取到的網頁資料傳回
+    return output
+
+@app.route('/table')
+def timeTable():
+    return '''
+    &lt;table style="border-collapse: collapse; width: 83.6478%; height: 90px;" border="1"&gt;
+&lt;tbody&gt;
+&lt;tr style="height: 18px;"&gt;
+&lt;td style="width: 16.6667%; height: 18px; text-align: center;"&gt;樓層&lt;/td&gt;
+&lt;td style="width: 13.3648%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 13.2076%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 12.2642%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 12.4214%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 15.7233%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr style="height: 18px;"&gt;
+&lt;td style="width: 16.6667%; text-align: center; height: 18px;"&gt;9 F&lt;/td&gt;
+&lt;td style="width: 13.3648%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0911"&gt;機電實驗室&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 13.2076%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 12.2642%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 12.4214%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 15.7233%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr style="height: 18px;"&gt;
+&lt;td style="width: 16.6667%; text-align: center; height: 18px;"&gt;8 F&lt;/td&gt;
+&lt;td style="width: 13.3648%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0842"&gt;機械元件&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 13.2076%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0830"&gt;輔助繪圖室&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.2642%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0823"&gt;新產品&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.4214%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0820"&gt;智慧感測&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 15.7233%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0810"&gt;輔助設計室&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr style="height: 18px;"&gt;
+&lt;td style="width: 16.6667%; text-align: center; height: 18px;"&gt;7 F&lt;/td&gt;
+&lt;td style="width: 13.3648%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0760"&gt;逆向&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 13.2076%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0730"&gt;研討室(一)&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.2642%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0710"&gt;研討室(二)&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.4214%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 15.7233%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr style="height: 18px;"&gt;
+&lt;td style="width: 16.6667%; text-align: center; height: 18px;"&gt;6 F&lt;/td&gt;
+&lt;td style="width: 13.3648%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0611"&gt;創意設計&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 13.2076%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0620"&gt;動態系統&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.2642%; height: 18px;"&gt;&lt;a href="https://nfumde.herokuapp.com/?classroomno=BGA0611"&gt;研討室(三)&lt;/a&gt;&lt;/td&gt;
+&lt;td style="width: 12.4214%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="width: 15.7233%; height: 18px;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br /&gt; 程式碼: &lt;a href="https://github.com/mdecourse/nfumde"&gt;https://github.com/mdecourse/nfumde&lt;/a&gt;
+    '''
+    
+# 修改步驟 4/6 , 因為改寫為網際程式後, 下列將內容存檔並自動呼叫 Firefox 的程式碼不再適用, 必須蓋掉
+'''
+# 將 output 寫入 w1_classroom.html
+fileName = "w1_classroom.html"
+with open(fileName, "w", encoding="utf-8") as file:
+    file.write(output)
+# 利用 os.system() 以 default browser 開啟 w1_class_local.html
+filePath = pathlib.Path(__file__).parent.absolute()
+#print(filePath)
+# set firefox as default browser and start url to open html file
+os.system("start file:///" + str(filePath) + "\\" + fileName)
+'''
+
+# 修改步驟 6/6, 配合網際程式啟動,  以及 Python 程式執行與納入其他程式執行的特定進行配置
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)
+    &lt;/code&gt;&lt;/pre&gt;
+     &lt;a href="https://ss40723240.herokuapp.com/table"&gt;程式碼推上heroku&lt;/a&gt;
 &lt;/section&gt;
 
 </t>
 <t tx="leo.20200818170909.1">&lt;section&gt;
-    &lt;h2&gt;Vertical Slides&lt;/h2&gt;
-    &lt;p&gt;Slides can be nested inside of each other.&lt;/p&gt;
-    &lt;p&gt;Use the &lt;em&gt;Space&lt;/em&gt; key to navigate through all slides.&lt;/p&gt;
-    &lt;br&gt;
-    &lt;a href="#" class="navigate-down"&gt;
-        &lt;img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow"&gt;
-    &lt;/a&gt;
+    &lt;h2&gt;WEEK4-7&lt;/h2&gt;
+    &lt;p&gt;
+ week4 acp.bat cms.bat執行
+  &lt;br&gt;week5-6 ssh &lt;br&gt; week7 heroku實作&lt;br&gt; 
+ &lt;a href="https://s40723240.github.io/wcm2021/content/WEEK1-9.html"&gt;一到九週網站&lt;/a&gt; 
+&lt;/p&gt;
 &lt;/section&gt;
 </t>
-<t tx="leo.20200818170953.1">&lt;section&gt;
-    &lt;h2&gt;Basement Level 1&lt;/h2&gt;
-    &lt;p&gt;Nested slides are useful for adding additional detail underneath a high level horizontal slide.&lt;/p&gt;
-&lt;/section&gt;
-</t>
-<t tx="leo.20200818171010.1">&lt;section&gt;
-    &lt;h2&gt;Basement Level 2&lt;/h2&gt;
-    &lt;p&gt;That's it, time to go back up.&lt;/p&gt;
-    &lt;br&gt;
-    &lt;a href="#/2"&gt;
-        &lt;img class="r-frame" style="background: rgba(255,255,255,0.1); transform: rotate(180deg);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Up arrow"&gt;
-    &lt;/a&gt;
-&lt;/section&gt;</t>
 <t tx="leo.20200818171138.1">&lt;section data-auto-animate&gt;
     &lt;h2 data-id="code-title"&gt;Pretty Code&lt;/h2&gt;
     &lt;pre data-id="code-animation"&gt;&lt;code class="hljs" data-trim data-line-numbers&gt;
