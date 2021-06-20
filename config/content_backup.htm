@@ -3,8 +3,9 @@
 <p><a href="https://s40723240.github.io/wcm2021/content/WEEK10-18.html">week10-18</a></p>
 <p>個人倉儲:<a href="https://github.com/s40723240/wcm2021">https://github.com/s40723240/wcm2021</a></p>
 <p>個人heroku:<a href="https://s40723240.herokuapp.com/content/index.html">https://s40723240.herokuapp.com/content/index.html</a></p>
-<p>第一台主機:<a href="https://a40723240.herokuapp.com/content/index.html">https://a40723240.herokuapp.com/content/index.html</a></p>
-<p>第二台主機:<a href="https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81">https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81</a></p>
+<p><a href="https://a40723240.herokuapp.com/content/index.html">第一台靜態主機</a></p>
+<p><a href="https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81">第二台動態主機</a></p>
+<p></p>
 <h2>WEEK1-9</h2>
 <p><span style="color: #ff0000;"><strong>week1</strong></span></p>
 <p>敘述網際內容管理課程所需要的相關資料</p>
@@ -31,8 +32,7 @@
 <li>一旦 Github session 設定完成, 可以從 [HKEY_CURRENT_USER\SOFTWARE\SimonTatham] 將 registry 設定匯出存為 y:\my_github.reg, 並在 start_ipv6.bat 中以  regedit.exe /S y:\my_github.reg 將設定匯入.</li>
 </ol>
 <h4><img alt="" height="473" src="/images/ssh.png" width="904"/></h4>
-<p><strong><span style="color: #ff0000;"><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/U9bDlg5aJhc" width="560"></iframe></span></strong></p>
-<p><span style="color: #000000;">假如您使用的 cmsimde 並不是最新版本, 可以設法進入 cmsimde 子目錄後, 以 git pull origin master 拉回最新版本的程式碼, 並且注意是否 cmsimde/up_dir 目錄中有檔案更新, 若是則必須將這些隨著版次更新的檔案, 從 up_dir 複製到倉儲根目錄.</span></p>
+<p><strong><span style="color: #ff0000;"></span></strong><span style="color: #000000;">假如您使用的 cmsimde 並不是最新版本, 可以設法進入 cmsimde 子目錄後, 以 git pull origin master 拉回最新版本的程式碼, 並且注意是否 cmsimde/up_dir 目錄中有檔案更新, 若是則必須將這些隨著版次更新的檔案, 從 up_dir 複製到倉儲根目錄.</span></p>
 <p><strong><span style="color: #ff0000;">week7</span></strong></p>
 <p><strong><span style="color: #000000;">heroku實作</span></strong></p>
 <p><span>步驟一:</span><span><span> </span>(</span><span>建立 Heroku 帳號</span><span>) 進入<span> </span></span><a href="https://heroku.com/">https://heroku.com</a><span>, 建立帳號:s40723240,密碼設定必須要至少 8 個字元, 且字元中必須包含符號, 英文字母及數字,  並且登記後要進入 @gm 帳號進行確認後才能開通 Heroku 帳號. </span></p>
@@ -60,21 +60,18 @@ path=%Disk%:;%path_python%;%path_portablegit%;%path_heroku%;%path%;
 <p><span>步驟八:</span><span><span> </span>(</span><span>以 git 進行提交推送</span><span>)<span> </span></span></p>
 <p><span><span><img alt="" height="242" src="/images/1.png" width="913"/></span></span></p>
 <p><span><span><img alt="" height="113" src="/images/2.png" width="913"/></span></span></p>
-<p><span><span><img alt="" height="770" src="/images/3.png" width="924"/></span></span></p>
-<h2>WEEK10-18</h2>
+<p><span><span><img alt="" height="770" src="/images/3.png" width="924"/></span></span></p><h2>WEEK10-18</h2>
 <p><span style="color: #ff0000;"><strong>week10</strong></span></p>
 <p><span style="color: #000000;">這周設置登入密碼</span></p>
 <p><span style="color: #000000;">帳號:kmolab</span></p>
 <p>密碼:kmolab週數</p>
 <p>設定在ssh上</p>
 <p><span style="color: #ff0000;"><strong>week11</strong></span></p>
-<p><span style="color: #000000;"><span>下載robodk522_portable.7z</span></span></p>
-<p>開啟robodk.exe</p>
-<p>開啟examples資料夾pick_and_place選取所有檔案</p>
-<p>在python黑窗下輸入<span style="color: #ff0000;">pip install robodk</span></p>
-<p><span style="color: #ff0000;"><span style="color: #000000;">將<span style="color: #ff0000;">pick_and_place.py<span style="color: #000000;">拉進S</span><span style="color: #000000;">ciTE下tools-&gt;go</span></span></span></span></p>
+<p><span style="color: #000000;"><strong></strong>cmd ipconfig/all 查詢IP<br/>尋找ipv4位址 192.168.88.54<br/>將robodk範例資料夾中拉pick and place.py 拉近SciTE編輯器<br/>在 RDK = Robolink () 括弧中打上 "192.168.88.54"<br/>開啟robodk.exe後將範例資料夾中除了pick and place.py檔案其他全選開啟<br/>工具/選項/其他/允許外部API/localhost確認是否正確輸入目前電腦網路IP<br/>進入編輯器 tools-&gt;GO</span></p>
+<p><span style="color: #000000;"><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/dD2GIXJkGQ8" width="560"></iframe></span></p>
+<p><span style="color: #000000;"><span></span></span></p>
 <p><span style="color: #ff0000;"><strong>week12</strong></span></p>
-<p>YT+OBS直播</p>
+<p>上課說明利用YT+OBS直播</p>
 <p><span style="color: #ff0000;"><strong>week13</strong></span></p>
 <p>遠距上課google meet</p>
 <p><strong><span style="color: #ff0000;">week14</span></strong></p>
@@ -83,11 +80,16 @@ path=%Disk%:;%path_python%;%path_portablegit%;%path_heroku%;%path%;
 <p><strong><span style="color: #ff0000;">week15</span></strong></p>
 <p><span style="color: #000000;">線上開會</span></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/PNEg6KumGUI" width="560"></iframe></p>
-<p><span style="color: #ff0000;">week16</span></p>
+<p><strong><span style="color: #ff0000;">week16</span></strong></p>
 <p><span style="color: #000000;">建立主機</span></p>
 <p><span style="color: #000000;">1.<a href="https://a40723240.herokuapp.com/content/index.html">第一台靜態主機</a></span></p>
+<p><span style="color: #000000;"></span></p>
 <p><span style="color: #000000;">2.<a href="https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81">第二台動態主機</a></span></p>
-<h1>Note</h1>
+<p><span style="color: #000000;"><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/3ahFhnCA_lY" width="560"></iframe></span></p>
+<p><span style="color: #ff0000;"><strong>week17</strong></span></p>
+<p><span style="color: #ff0000;"><span style="color: #000000;">將進度補上進行期末報告</span><strong><br/></strong></span></p>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;"></span></p><h1>Note</h1>
 <p><strong>Q: 如何clone含有cmsimde的倉儲</strong></p>
 <p><strong><span color="#000000">A:</span><span style="color: #ff0000;"><span color="#000000">git clone --recurse-submodules "倉儲.git"</span></span></strong></p>
 <p><span style="color: #000000;"><strong><span color="#000000">Q:將cmsimde更新至最新版本</span></strong></span></p>
@@ -316,6 +318,11 @@ if __name__ == '__main__':
 <p></p>
 <p></p>
 <h1>期末報告</h1>
-<p><span style="color: #000000;"></span></p>
+<h4><span>主機一: 利用 Heroku 呈現靜態網頁內容.</span></h4>
+<p><span><a href="https://a40723240.herokuapp.com/content/index.html">https://a40723240.herokuapp.com/content/index.html</a></span></p>
+<h4><span>主機二: Heroku Python 應用程式主機</span></h4>
+<p><span style="color: #000000;"><a href="https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81">https://b40723240.herokuapp.com/get_page/%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81</a></span></p>
+<p>動態網站編輯無法儲存內容</p>
+<p>操作影片</p>
 <p></p>
 <p></p>
